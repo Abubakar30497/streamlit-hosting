@@ -1,7 +1,5 @@
 nltk
 transformers
 pandas
-matplotlib
 beautifulsoup4
-BeautifulSoup
-beautifulsoup
+matplotlib
