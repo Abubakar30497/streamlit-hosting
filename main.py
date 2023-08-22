@@ -1,78 +1,49 @@
-from tkinter import *
-
-#libraries
+import streamlit as st
 import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('wordnet')
-nltk.download('omw-1.4')
 import re
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
-
 import requests
 from bs4 import BeautifulSoup
-
 import os
-
-#from datasets import load_dataset
-import matplotlib.pyplot as plt
-
 import pandas as pd
 import numpy as np
-
 from collections import defaultdict
-
-import torch
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-from transformers import BartTokenizer, BartForConditionalGeneration, AutoTokenizer
-
-from transformers import LEDTokenizer, LEDForConditionalGeneration
-
-from PIL import Image
-from torchvision import transforms
-from pathlib import Path
-import clip
-
-
-from matplotlib import pyplot as plt
-from matplotlib import image as mpimg
-
-import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
-
-
 from PIL import Image
+from transformers import BartTokenizer, BartForConditionalGeneration, AutoTokenizer
+from transformers import LEDTokenizer, LEDForConditionalGeneration
+import torch
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+import clip
 
-#from fastai.text.all import *
-#from transformers import *
-#from blurr.text.data.all import *
-#from blurr.text.modeling.all import *
-nltk.download('punkt')
+# Streamlit code starts here
 
-#import clip
+st.title("Text Analysis Tool")
 
-#from google.colab import drive
-#drive.mount('/content/drive')
+# Create a text input field
+query_text = st.text_input("Enter a query:")
 
-#from rouge_score import rouge_scorer
+# Create a button to trigger analysis
+if st.button("Fetch and Analyze"):
+    # Perform analysis when the button is clicked
+    extracted_text = textscrapper(query_text)
+    
+    # Display extracted and clustered text
+    st.subheader("Extracted and Clustered Text:")
+    st.write(extracted_text)
+
+# Streamlit code ends here
+
+# Rest of your code
+# ...
 
 
-ledtokenizer = LEDTokenizer.from_pretrained("hyesunyun/update-summarization-bart-large-longformer")
-ledmodel = LEDForConditionalGeneration.from_pretrained("hyesunyun/update-summarization-bart-large-longformer").to(device)
-
-
-from tkinter import Button
-
-
-root = Tk()
-root.title("Front End")
 
 def group_documents(documents, labels):
     grouped_documents = defaultdict(list)
