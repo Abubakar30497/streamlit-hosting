@@ -1,5 +1,5 @@
 nltk
 transformers
 pandas
-beautifulsoup4
+beautifulsoup3
 matplotlib
