@@ -2,3 +2,4 @@ nltk
 transformers
 pandas
 matplotlib
+beautifulsoup4
