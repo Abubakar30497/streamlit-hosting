@@ -8,7 +8,7 @@ from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 import requests
 try:
-    from bs4 import BeautifulSoup
+    from BeautifulSoup import BeautifulSoup 
 except :
     from BeautifulSoup import BeautifulSoup 
 import os
