@@ -26,15 +26,15 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 import clip
 
 from transformers import LEDTokenizer, LEDForConditionalGeneration
-@st.cache
-model_name = "allenai/led-base-16384"
-tokenizer = LEDTokenizer.from_pretrained(model_name)
-model = LEDForConditionalGeneration.from_pretrained(model_name)
+@st.cache_resource
+def load_model():
+    model_name = "allenai/led-base-16384"
+    tokenizer = LEDTokenizer.from_pretrained(model_name)
+    model = LEDForConditionalGeneration.from_pretrained(model_name)
 
-#model, preprocess = clip.load("ViT-B/32", device=device, jit=False)
-@st.cache
-model, preprocess = clip.load("ViT-B/16", device=device, jit=False)
-
+    #model, preprocess = clip.load("ViT-B/32", device=device, jit=False)
+    model, preprocess = clip.load("ViT-B/16", device=device, jit=False)
+load_model()
 #tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
 #model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
 #model = LEDForConditionalGeneration.from_pretrained("allenai/led-base-16384")
