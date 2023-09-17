@@ -80,12 +80,12 @@ def image_recomendation(sumrey, results):
         os.remove(image_path)
           
     text = sumrey
-    max_length = model.context_length
+    max_length = model1.context_length
     text_tokenized = clip.tokenize(text[:max_length]).to(device)
     # Tokenize and encode the text
     #text_tokenized = clip.tokenize(text).to(device)
     with torch.no_grad():
-        text_features = model.encode_text(text_tokenized)
+        text_features = model1.encode_text(text_tokenized)
 
     image_folder = Path('/content/images/')
 
