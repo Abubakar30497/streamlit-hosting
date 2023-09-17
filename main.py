@@ -73,7 +73,6 @@ def image_recomendation(sumrey):
       #image = Image.open(image_path)
       try:
         print("trying :"+filename)
-        @st.cache
         image = Image.open(image_path)
       except:
         print("deleting"+ filename)
