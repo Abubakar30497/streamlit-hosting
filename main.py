@@ -24,10 +24,10 @@ import torch
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 import clip
 
-from transformers import LongformerTokenizer, LongformerForConditionalGeneration
+from transformers import LongformerTokenizer, LongformerForMaskedLM
 model_name = "allenai/longformer-base-4096"
 tokenizer = LongformerTokenizer.from_pretrained(model_name)
-model = LongformerForConditionalGeneration.from_pretrained(model_name)
+model = LongformerForMaskedLM.from_pretrained(model_name)
 
 #from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
