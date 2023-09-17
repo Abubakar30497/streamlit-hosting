@@ -32,7 +32,7 @@ tokenizer = LEDTokenizer.from_pretrained(model_name)
 model = LEDForConditionalGeneration.from_pretrained(model_name)
 
 #model, preprocess = clip.load("ViT-B/32", device=device, jit=False)
-model, preprocess = clip.load("ViT-B/16", device=device)
+model, preprocess = clip.load("ViT-B/16", device=device, jit=False)
 
 ViT-Tiny
 #tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
