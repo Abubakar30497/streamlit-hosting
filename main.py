@@ -29,7 +29,7 @@ tokenizer = AutoTokenizer.from_pretrained("allenai/led-base-16384")
 model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
 
 def summarize(text):
-    inputs = tokenizer(text, return_tensors="pt", max_length=1000, truncation=True).to(device)
+    inputs = tokenizer(text, return_tensors="pt", max_length=2000, truncation=True).to(device)
     summary_ids = model.generate(inputs['input_ids'], num_beams=4,min_length = 300, max_length=500, early_stopping=True)
     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
     return summary
@@ -263,9 +263,9 @@ def textscrapper(t):
 
 
   grouped_docs = group_documents(documents, labels)
-  print(grouped_docs[0])
+  #print(grouped_docs[0])
   
-  return grouped_docs[0]
+  return grouped_docs
 
 
 
@@ -286,7 +286,14 @@ extracted_text = textscrapper(query_text)
 #st.write(extracted_text)
 
 st.subheader("Summary:")
-st.write(summarize(extracted_text))
+sums = []
+for text in extracted_text:
+    sums.append(summarize(text))
+mediate_summary = ''
+for s in sums:
+  mediate_summary+=' '+s
+    
+st.write(summarize(mediate_summary))
 # Streamlit code ends here
 
 # Rest of your code
