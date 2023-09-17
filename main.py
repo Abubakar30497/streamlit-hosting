@@ -24,12 +24,11 @@ import torch
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 import clip
 
-from transformers import LongformerTokenizer, LongformerForMaskedLM
-model_name = "allenai/longformer-base-4096"
-tokenizer = LongformerTokenizer.from_pretrained(model_name)
-model = LongformerForMaskedLM.from_pretrained(model_name)
+from transformers import LEDTokenizer, LEDForConditionalGeneration
 
-#from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+model_name = "allenai/led-base-16384"
+tokenizer = LEDTokenizer.from_pretrained(model_name)
+model = LEDForConditionalGeneration.from_pretrained(model_name)
 
 
 #tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
@@ -38,12 +37,8 @@ model = LongformerForMaskedLM.from_pretrained(model_name)
 
 def summarize(text):
     input_ids = tokenizer.encode(text, return_tensors="pt", max_length=4096, truncation=True)
-    summary_ids = model.generate(input_ids, max_length=150, min_length=40, length_penalty=2.0, num_beams=4, early_stopping=True)
+    summary_ids = model.generate(input_ids, max_length=500, min_length=200, num_beams=4, length_penalty=2.0, early_stopping=True)
     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-
-    #inputs = tokenizer(text, return_tensors="pt", max_length=2000, truncation=True).to(device)
-    #summary_ids = model.generate(inputs['input_ids'], num_beams=4,min_length = 300, max_length=500, early_stopping=True)
-    #summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
     return summary
     
 def group_documents(documents, labels):
@@ -246,7 +241,7 @@ def textscrapper(t):
   X = vectorizer.fit_transform(documents)
   
   # Cluster documents with KMeans
-  n_clusters = 1
+  n_clusters = 2
   if X.shape[0]<3:
     n_clusters = X.shape[0]  
   kmeans = KMeans(n_clusters=n_clusters)
@@ -299,7 +294,7 @@ extracted_text = textscrapper(query_text)
 
 st.subheader("Summary:")
 sums = []
-for text in extracted_text[:-1:-1]:
+for text in extracted_text:
     sums.append(summarize(text))
 mediate_summary = ''
 for s in sums:
@@ -313,15 +308,6 @@ st.write(summarize(mediate_summary))
 
 
 
-
-
-
-# Function to display entered text in text box
-def display_text():
-    #text = input_field.get()
-    text = textscrapper(input_field.get())
-  
-    text_box.insert(END, text + "\n")
 
 
 
