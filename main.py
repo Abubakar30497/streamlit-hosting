@@ -39,7 +39,7 @@ model, preprocess = clip.load("ViT-B/32", device=device, jit=False)
 
 def image_recomendation():
     if not os.path.exists('images'):
-    os.makedirs('images')
+        os.makedirs('images')
 
 
     # Loop through each link and extract images
