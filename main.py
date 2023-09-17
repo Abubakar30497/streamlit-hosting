@@ -26,13 +26,14 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 import clip
 
 from transformers import LEDTokenizer, LEDForConditionalGeneration
-
+@st.cache
 model_name = "allenai/led-base-16384"
 tokenizer = LEDTokenizer.from_pretrained(model_name)
 model = LEDForConditionalGeneration.from_pretrained(model_name)
 
 #model, preprocess = clip.load("ViT-B/32", device=device, jit=False)
-#model, preprocess = clip.load("ViT-B/16", device=device, jit=False)
+@st.cache
+model, preprocess = clip.load("ViT-B/16", device=device, jit=False)
 
 #tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
 #model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
@@ -72,6 +73,7 @@ def image_recomendation(sumrey):
       #image = Image.open(image_path)
       try:
         print("trying :"+filename)
+        @st.cache
         image = Image.open(image_path)
       except:
         print("deleting"+ filename)
@@ -385,7 +387,6 @@ for s in sums:
     
 st.write(summarize(mediate_summary))
 
-model, preprocess = clip.load("ViT-B/16", device=device, jit=False)
 st.image(image_recomendation(), caption='Optional Image Caption', use_column_width=True)
 
 # Streamlit code ends here
