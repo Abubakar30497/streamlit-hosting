@@ -9,6 +9,7 @@ openpyxl==3.0.5
 pillow==8.0.1
 sklearn==0.0
 torch
+torchvision
 openai-clip
 accelerate
 transformers[torch]
