@@ -34,7 +34,8 @@ def load_model():
 
     #model, preprocess = clip.load("ViT-B/32", device=device, jit=False)
     model, preprocess = clip.load("ViT-B/16", device=device, jit=False)
-load_model()
+    return model, tokenizer
+model, tokenizer = load_model()
 #tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
 #model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
 #model = LEDForConditionalGeneration.from_pretrained("allenai/led-base-16384")
