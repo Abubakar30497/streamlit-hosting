@@ -1,5 +1,6 @@
 import streamlit as st
 import nltk
+from pathlib import Path
 nltk.download('punkt')
 nltk.download("stopwords")
 import re
@@ -87,7 +88,7 @@ def image_recomendation(sumrey, results):
     with torch.no_grad():
         text_features = model1.encode_text(text_tokenized)
 
-    image_folder = Path('/content/images/')
+    image_folder = Path('images/')
 
     images = []
 
