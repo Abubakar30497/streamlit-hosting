@@ -25,7 +25,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 import clip
 
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-tokenizer = AutoTokenizer.from_pretrained("allenai/led-base-16384")
+tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
 model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
 
 def summarize(text):
