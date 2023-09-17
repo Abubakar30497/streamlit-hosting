@@ -23,29 +23,6 @@ import torch
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 import clip
 
-# Streamlit code starts here
-
-st.title("Text Analysis Tool")
-
-# Create a text input field
-query_text = st.text_input("Enter a query:")
-
-# Create a button to trigger analysis
-#if st.button("Fetch and Analyze"):
-    # Perform analysis when the button is clicked
-extracted_text = textscrapper(query_text)
-    
-    # Display extracted and clustered text
-st.subheader("Extracted and Clustered Text:")
-st.write(extracted_text)
-
-# Streamlit code ends here
-
-# Rest of your code
-# ...
-
-
-
 def group_documents(documents, labels):
     grouped_documents = defaultdict(list)
     for doc, label in zip(documents, labels):
@@ -54,11 +31,6 @@ def group_documents(documents, labels):
     for label in sorted(grouped_documents.keys()):
         result.append('\n\n'.join(grouped_documents[label]))
     return result
-
-
-
-
-
 def extract_content(url, length_limit=100):
     # Make a GET request to the URL
     response = requests.get(url)
@@ -83,7 +55,6 @@ def extract_content(url, length_limit=100):
     combined_text = ' '.join(combined_text.split())
 
     return combined_text
-
 
 def textscrapper(t):
   # Input capture
@@ -285,8 +256,40 @@ def textscrapper(t):
   
   return grouped_docs[0]
 
+
+
+# Streamlit code starts here
+
+st.title("Text Analysis Tool")
+
+# Create a text input field
+query_text = st.text_input("Enter a query:")
+
+# Create a button to trigger analysis
+#if st.button("Fetch and Analyze"):
+    # Perform analysis when the button is clicked
+extracted_text = textscrapper(query_text)
+    
+    # Display extracted and clustered text
+st.subheader("Extracted and Clustered Text:")
+st.write(extracted_text)
+
+# Streamlit code ends here
+
+# Rest of your code
+# ...
+
+
+
+
+
+
+
+
+
+
   
-  return keywords
+  #return keywords
 
 
 # Function to display entered text in text box
