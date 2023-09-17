@@ -40,7 +40,13 @@ def summarize(text):
     input_ids = tokenizer.encode(text, return_tensors="pt", max_length=4096, truncation=True)
     summary_ids = model.generate(input_ids, max_length=500, min_length=200, num_beams=4, length_penalty=2.0, early_stopping=True)
     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
-    return summary
+
+    lfsi = summary.rfind('.')
+    if lfsi != -1:
+        truncated_text = summary[:lfsi + 1]
+        return truncated_text
+    else:
+        return summary
     
 def group_documents(documents, labels):
     grouped_documents = defaultdict(list)
