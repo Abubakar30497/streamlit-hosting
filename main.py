@@ -9,7 +9,7 @@ from nltk.tokenize import word_tokenize
 #from nltk.stem import WordNetLemmatizer
 import requests
 from bs4 import BeautifulSoup 
-#import os
+import os
 import pandas as pd
 import numpy as np
 from collections import defaultdict
@@ -24,14 +24,26 @@ import torch
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 import clip
 
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
-tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
-model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
+from transformers import LongformerTokenizer, LongformerForConditionalGeneration
+model_name = "allenai/longformer-base-4096"
+tokenizer = LongformerTokenizer.from_pretrained(model_name)
+model = LongformerForConditionalGeneration.from_pretrained(model_name)
+
+#from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+
+
+#tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
+#model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
+#model = LEDForConditionalGeneration.from_pretrained("allenai/led-base-16384")
 
 def summarize(text):
-    inputs = tokenizer(text, return_tensors="pt", max_length=2000, truncation=True).to(device)
-    summary_ids = model.generate(inputs['input_ids'], num_beams=4,min_length = 300, max_length=500, early_stopping=True)
+    input_ids = tokenizer.encode(text, return_tensors="pt", max_length=4096, truncation=True)
+    summary_ids = model.generate(input_ids, max_length=150, min_length=40, length_penalty=2.0, num_beams=4, early_stopping=True)
     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+
+    #inputs = tokenizer(text, return_tensors="pt", max_length=2000, truncation=True).to(device)
+    #summary_ids = model.generate(inputs['input_ids'], num_beams=4,min_length = 300, max_length=500, early_stopping=True)
+    #summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
     return summary
     
 def group_documents(documents, labels):
