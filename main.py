@@ -5,21 +5,21 @@ nltk.download("stopwords")
 import re
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer
-from nltk.stem import WordNetLemmatizer
+#from nltk.stem import PorterStemmer
+#from nltk.stem import WordNetLemmatizer
 import requests
 from bs4 import BeautifulSoup 
-import os
+#import os
 import pandas as pd
 import numpy as np
 from collections import defaultdict
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 from sklearn.decomposition import PCA
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from PIL import Image
-from transformers import BartTokenizer, BartForConditionalGeneration, AutoTokenizer
-from transformers import LEDTokenizer, LEDForConditionalGeneration
+#from transformers import BartTokenizer, BartForConditionalGeneration, AutoTokenizer
+#from transformers import LEDTokenizer, LEDForConditionalGeneration
 import torch
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 import clip
@@ -245,12 +245,12 @@ def textscrapper(t):
   X_pca = pca.fit_transform(X.toarray())
   
   # Plot clusters
-  colors = ['r', 'b', 'g', 'c', 'm', 'y', 'k']
-  plt.figure(figsize=(8, 8))
-  for i in range(n_clusters):
-      plt.scatter(X_pca[kmeans.labels_ == i, 0], X_pca[kmeans.labels_ == i, 1], c=colors[i], label='Cluster '+str(i+1))
-  plt.legend()
-  plt.show()
+  #colors = ['r', 'b', 'g', 'c', 'm', 'y', 'k']
+  #plt.figure(figsize=(8, 8))
+  #for i in range(n_clusters):
+  #    plt.scatter(X_pca[kmeans.labels_ == i, 0], X_pca[kmeans.labels_ == i, 1], c=colors[i], label='Cluster '+str(i+1))
+  #plt.legend()
+  #plt.show()
   
   #get the cluster labels
   labels = kmeans.labels_
