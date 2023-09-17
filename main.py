@@ -31,10 +31,85 @@ model_name = "allenai/led-base-16384"
 tokenizer = LEDTokenizer.from_pretrained(model_name)
 model = LEDForConditionalGeneration.from_pretrained(model_name)
 
+model, preprocess = clip.load("ViT-B/32", device=device, jit=False)
 
 #tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
 #model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
 #model = LEDForConditionalGeneration.from_pretrained("allenai/led-base-16384")
+
+def image_recomendation():
+    if not os.path.exists('images'):
+    os.makedirs('images')
+
+
+    # Loop through each link and extract images
+    for result in results['items']:
+        link = result['link']
+        # Make a request to the link
+        response = requests.get(link)
+        soup = BeautifulSoup(response.content, 'html.parser')
+    
+        # Find all image tags in the HTML content
+        img_tags = soup.find_all('img')
+    
+        # Loop through each image tag and download the image
+        for img in img_tags:
+            img_url = img.get('src')
+            if img_url and img_url.startswith('http'):
+                # Make a request to the image URL
+                img_response = requests.get(img_url)
+    
+                # Save the image to the images directory
+                try:
+                  with open('images/{}.jpg'.format(os.path.basename(img_url)), 'wb') as f:
+                      f.write(img_response.content)
+                except:
+                  continue
+    image_folder = "/content/images/"
+    for filename in os.listdir(image_folder):
+      image_path = os.path.join(image_folder, filename)
+      #image = Image.open(image_path)
+      try:
+        print("trying :"+filename)
+        image = Image.open(image_path)
+      except:
+        print("deleting"+ filename)
+        os.remove(image_path)
+          
+    text = final_summary
+    max_length = model.context_length
+    text_tokenized = clip.tokenize(text[:max_length]).to(device)
+    # Tokenize and encode the text
+    #text_tokenized = clip.tokenize(text).to(device)
+    with torch.no_grad():
+        text_features = model.encode_text(text_tokenized)
+
+    image_folder = Path('/content/images/')
+
+    images = []
+
+    for image_path in image_folder.glob('*.jpg'):
+        # Load and preprocess the image
+        image = Image.open(image_path)
+        image_tensor = preprocess(image).unsqueeze(0).to(device)
+    
+        with torch.no_grad():
+            image_features = model.encode_image(image_tensor)
+    
+        images.append((image_path, image_features))
+
+    similarities = []
+    for image_path, image_features in images:
+        similarity = (text_features @ image_features.T).item()
+        similarities.append((similarity, image_path))
+
+    similarities.sort(reverse=True)
+    
+    for similarity, image_path in similarities[:1]:
+        print(f'Similarity: {similarity:.2f}, Image: {image_path}')
+        resultant_image = image_path
+    return resultant_image
+    
 
 def summarize(text):
     input_ids = tokenizer.encode(text, return_tensors="pt", max_length=4096, truncation=True)
@@ -308,34 +383,13 @@ for s in sums:
   mediate_summary+=' '+s
     
 st.write(summarize(mediate_summary))
+
+st.image(image_recomendation(), caption='Optional Image Caption', use_column_width=True)
+
 # Streamlit code ends here
 
 # Rest of your code
 # ...
-
-
-
-
-
-
-
-# Input field
-Label(root, text="Enter text:").pack()
-input_field = Entry(root)
-input_field.pack()
-
-
-
-# Text box
-Label(root, text="Text box:").pack()
-text_box = Text(root, height=5)
-text_box.pack()
-
-# Canvas for images
-Label(root, text="Image display:").pack()
-canvas = Canvas(root, width=300, height=300)
-canvas.pack()
-
 
 
 root.mainloop()
