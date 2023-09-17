@@ -7,10 +7,7 @@ from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 from nltk.stem import WordNetLemmatizer
 import requests
-try:
-    from BeautifulSoup import BeautifulSoup 
-except :
-    from BeautifulSoup import BeautifulSoup 
+from bs4 import BeautifulSoup 
 import os
 import pandas as pd
 import numpy as np
