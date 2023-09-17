@@ -32,7 +32,7 @@ tokenizer = LEDTokenizer.from_pretrained(model_name)
 model = LEDForConditionalGeneration.from_pretrained(model_name)
 
 #model, preprocess = clip.load("ViT-B/32", device=device, jit=False)
-model, preprocess = clip.load("ViT-B/16", device=device, jit=False)
+#model, preprocess = clip.load("ViT-B/16", device=device, jit=False)
 
 #tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
 #model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
@@ -385,6 +385,7 @@ for s in sums:
     
 st.write(summarize(mediate_summary))
 
+model, preprocess = clip.load("ViT-B/16", device=device, jit=False)
 st.image(image_recomendation(), caption='Optional Image Caption', use_column_width=True)
 
 # Streamlit code ends here
