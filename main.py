@@ -33,9 +33,9 @@ def load_model():
     model = LEDForConditionalGeneration.from_pretrained(model_name)
 
     #model, preprocess = clip.load("ViT-B/32", device=device, jit=False)
-    model, preprocess = clip.load("ViT-B/16", device=device, jit=False)
-    return model, tokenizer
-model, tokenizer = load_model()
+    model1, preprocess = clip.load("ViT-B/16", device=device, jit=False)
+    return model, model1,preprocess, tokenizer
+model,model1, preprocess,  tokenizer = load_model()
 #tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
 #model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
 #model = LEDForConditionalGeneration.from_pretrained("allenai/led-base-16384")
@@ -97,7 +97,7 @@ def image_recomendation(sumrey):
         image_tensor = preprocess(image).unsqueeze(0).to(device)
     
         with torch.no_grad():
-            image_features = model.encode_image(image_tensor)
+            image_features = model1.encode_image(image_tensor)
     
         images.append((image_path, image_features))
 
