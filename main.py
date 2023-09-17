@@ -31,13 +31,15 @@ model_name = "allenai/led-base-16384"
 tokenizer = LEDTokenizer.from_pretrained(model_name)
 model = LEDForConditionalGeneration.from_pretrained(model_name)
 
-model, preprocess = clip.load("ViT-B/32", device=device, jit=False)
+#model, preprocess = clip.load("ViT-B/32", device=device, jit=False)
+model, preprocess = clip.load("ViT-Tiny", device=device)
 
+ViT-Tiny
 #tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
 #model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
 #model = LEDForConditionalGeneration.from_pretrained("allenai/led-base-16384")
 
-def image_recomendation():
+def image_recomendation(sumrey):
     if not os.path.exists('images'):
         os.makedirs('images')
 
@@ -76,7 +78,7 @@ def image_recomendation():
         print("deleting"+ filename)
         os.remove(image_path)
           
-    text = final_summary
+    text = sumrey
     max_length = model.context_length
     text_tokenized = clip.tokenize(text[:max_length]).to(device)
     # Tokenize and encode the text
