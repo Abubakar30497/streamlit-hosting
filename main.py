@@ -384,10 +384,11 @@ for text in extracted_text:
 mediate_summary = ''
 for s in sums:
   mediate_summary+=' '+s
-    
-st.write(summarize(mediate_summary))
 
-st.image(image_recomendation(), caption='Optional Image Caption', use_column_width=True)
+fsummary = summarize(mediate_summary)
+st.write(fsummary)
+
+st.image(image_recomendation(fsummary), caption='Optional Image Caption', use_column_width=True)
 
 # Streamlit code ends here
 
