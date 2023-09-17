@@ -30,7 +30,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient
 
 def summarize(text):
     inputs = tokenizer(text, return_tensors="pt", max_length=1000, truncation=True).to(device)
-    summary_ids = model.generate(inputs['input_ids'], num_beams=4,min_length = 600, max_length=8000, early_stopping=True)
+    summary_ids = model.generate(inputs['input_ids'], num_beams=4,min_length = 400, max_length=1000, early_stopping=True)
     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
     return summary
     
