@@ -40,7 +40,7 @@ model,model1, preprocess,  tokenizer = load_model()
 #model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
 #model = LEDForConditionalGeneration.from_pretrained("allenai/led-base-16384")
 
-def image_recomendation(sumrey):
+def image_recomendation(sumrey, results):
     if not os.path.exists('images'):
         os.makedirs('images')
 
@@ -357,7 +357,7 @@ def textscrapper(t):
   grouped_docs = group_documents(documents, labels)
   #print(grouped_docs[0])
   
-  return grouped_docs
+  return grouped_docs,results
 
 
 
@@ -371,7 +371,7 @@ query_text = st.text_input("Enter a query:")
 # Create a button to trigger analysis
 #if st.button("Fetch and Analyze"):
     # Perform analysis when the button is clicked
-extracted_text = textscrapper(query_text)
+extracted_text, results = textscrapper(query_text)
     
     # Display extracted and clustered text
 #st.subheader("Extracted and Clustered Text:")
@@ -388,7 +388,7 @@ for s in sums:
 fsummary = summarize(mediate_summary)
 st.write(fsummary)
 
-st.image(image_recomendation(fsummary), caption='Optional Image Caption', use_column_width=True)
+st.image(image_recomendation(fsummary, results), caption='Optional Image Caption', use_column_width=True)
 
 # Streamlit code ends here
 
