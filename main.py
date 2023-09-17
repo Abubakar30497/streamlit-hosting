@@ -68,7 +68,7 @@ def image_recomendation(sumrey, results):
                       f.write(img_response.content)
                 except:
                   continue
-    image_folder = "/content/images/"
+    image_folder = "images/"
     for filename in os.listdir(image_folder):
       image_path = os.path.join(image_folder, filename)
       #image = Image.open(image_path)
