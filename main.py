@@ -24,6 +24,16 @@ import torch
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 import clip
 
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+tokenizer = AutoTokenizer.from_pretrained("allenai/led-base-16384")
+model = AutoModelForSeq2SeqLM.from_pretrained("allenai/led-base-16384", gradient_checkpointing=True)
+
+def summarize(text):
+    inputs = tokenizer(text, return_tensors="pt", max_length=1000, truncation=True).to(device)
+    summary_ids = model.generate(inputs['input_ids'], num_beams=4,min_length = 600, max_length=8000, early_stopping=True)
+    summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
+    return summary
+    
 def group_documents(documents, labels):
     grouped_documents = defaultdict(list)
     for doc, label in zip(documents, labels):
@@ -272,9 +282,11 @@ query_text = st.text_input("Enter a query:")
 extracted_text = textscrapper(query_text)
     
     # Display extracted and clustered text
-st.subheader("Extracted and Clustered Text:")
-st.write(extracted_text)
+#st.subheader("Extracted and Clustered Text:")
+#st.write(extracted_text)
 
+st.subheader("Summary:")
+st.write(summarize(extracted_text))
 # Streamlit code ends here
 
 # Rest of your code
@@ -285,14 +297,6 @@ st.write(extracted_text)
 
 
 
-
-
-
-
-  
-  #return keywords
-
-
 # Function to display entered text in text box
 def display_text():
     #text = input_field.get()
@@ -300,9 +304,6 @@ def display_text():
   
     text_box.insert(END, text + "\n")
 
-
-# Button to display entered text
-Button(root, text="Display Text", command=display_text).pack()
 
 
 
