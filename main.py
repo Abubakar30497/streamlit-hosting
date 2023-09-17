@@ -8,6 +8,7 @@ from nltk.tokenize import word_tokenize
 #from nltk.stem import PorterStemmer
 #from nltk.stem import WordNetLemmatizer
 import requests
+from requests.exceptions import Timeout
 from bs4 import BeautifulSoup 
 import os
 import pandas as pd
