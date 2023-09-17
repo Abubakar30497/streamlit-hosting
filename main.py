@@ -31,13 +31,13 @@ st.title("Text Analysis Tool")
 query_text = st.text_input("Enter a query:")
 
 # Create a button to trigger analysis
-if st.button("Fetch and Analyze"):
+#if st.button("Fetch and Analyze"):
     # Perform analysis when the button is clicked
-    extracted_text = textscrapper(query_text)
+extracted_text = textscrapper(query_text)
     
     # Display extracted and clustered text
-    st.subheader("Extracted and Clustered Text:")
-    st.write(extracted_text)
+st.subheader("Extracted and Clustered Text:")
+st.write(extracted_text)
 
 # Streamlit code ends here
 
