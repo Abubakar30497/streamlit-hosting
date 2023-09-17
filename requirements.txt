@@ -10,3 +10,5 @@ pillow==8.0.1
 sklearn==0.0
 torch
 openai-clip
+accelerate
+transformers[torch]
