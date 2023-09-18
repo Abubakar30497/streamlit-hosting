@@ -390,8 +390,8 @@ fsummary = summarize(mediate_summary)
 st.write(fsummary)
 result_path = image_recomendation(fsummary, results)
 print(result_path)
-
-st.image(image_recomendation(fsummary, results), caption='Optional Image Caption', use_column_width=True)
+result_image = Image.open(result_path)
+st.image(result_image, caption='Optional Image Caption', use_column_width=True)
 
 # Streamlit code ends here
 
