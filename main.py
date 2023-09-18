@@ -364,14 +364,12 @@ def textscrapper(t):
 
 # Streamlit code starts here
 
-st.title("Text Analysis Tool")
+st.title("WEB-SUM")
 
 # Create a text input field
 query_text = st.text_input("Enter a query:")
 
-# Create a button to trigger analysis
-#if st.button("Fetch and Analyze"):
-    # Perform analysis when the button is clicked
+
 extracted_text, results = textscrapper(query_text)
     
     # Display extracted and clustered text
@@ -390,14 +388,10 @@ fsummary = summarize(mediate_summary)
 st.write(fsummary)
 result_path = image_recomendation(fsummary, results)
 print(result_path)
+result_path
 result_image = Image.open(result_path)
 st.image(result_image, caption='Optional Image Caption', use_column_width=True)
 
 # Streamlit code ends here
 
-# Rest of your code
-# ...
-
-
-root.mainloop()
 
