@@ -327,7 +327,7 @@ def textscrapper(t):
   X = vectorizer.fit_transform(documents)
   
   # Cluster documents with KMeans
-  n_clusters = 2
+  n_clusters = 1
   if X.shape[0]<3:
     n_clusters = X.shape[0]  
   kmeans = KMeans(n_clusters=n_clusters)
