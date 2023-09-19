@@ -390,7 +390,7 @@ result_path = image_recomendation(fsummary, results)
 print(result_path)
 result_path
 result_image = Image.open(result_path)
-st.image(result_image, caption='Optional Image Caption', use_column_width=True)
+st.image(result_image, caption=' ', use_column_width=True)
 
 # Streamlit code ends here
 
