@@ -117,7 +117,7 @@ def image_recomendation(sumrey, results):
 
 def summarize(text):
     input_ids = tokenizer.encode(text, return_tensors="pt", max_length=1024, truncation=True)
-    summary_ids = model.generate(input_ids, max_length=400, min_length=180, num_beams=4, length_penalty=2.0, early_stopping=True)
+    summary_ids = model.generate(input_ids, max_length=250, min_length=150, num_beams=4, length_penalty=2.0, early_stopping=True)
     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
     lfsi = summary.rfind('.')
