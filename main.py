@@ -117,7 +117,7 @@ def image_recomendation(sumrey, results):
 
 def summarize(text):
     input_ids = tokenizer.encode(text, return_tensors="pt", max_length=1024, truncation=True)
-    summary_ids = model.generate(input_ids, max_length=250, min_length=150, num_beams=4, length_penalty=2.0, early_stopping=True)
+    summary_ids = model.generate(input_ids, max_length=250, min_length=220, num_beams=4, length_penalty=2.0, early_stopping=True)
     summary = tokenizer.decode(summary_ids[0], skip_special_tokens=True)
 
     lfsi = summary.rfind('.')
@@ -173,8 +173,8 @@ def textscrapper(t):
   tokens = word_tokenize(text)
   
   # Stop word removal
-  stop_words = set(stopwords.words("english"))
-  tokens = [word for word in tokens if word not in stop_words]
+  #stop_words = set(stopwords.words("english"))
+  #tokens = [word for word in tokens if word not in stop_words]
   
   # Stemming
   #ps = PorterStemmer()
@@ -327,7 +327,7 @@ def textscrapper(t):
   X = vectorizer.fit_transform(documents)
   
   # Cluster documents with KMeans
-  n_clusters = 3
+  n_clusters = 1
   if X.shape[0]<3:
     n_clusters = X.shape[0]  
   kmeans = KMeans(n_clusters=n_clusters)
