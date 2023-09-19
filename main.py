@@ -378,7 +378,7 @@ extracted_text, results = textscrapper(query_text)
 
 st.subheader("Summary:")
 sums = []
-for text in extracted_text[1:]:
+for text in extracted_text:
     sums.append(summarize(text))
 mediate_summary = ''
 for s in sums:
